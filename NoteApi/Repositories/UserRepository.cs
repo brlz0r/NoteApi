@@ -47,6 +47,7 @@ namespace NoteApi.Repositories
             return _mapper.Map<UserData>(data);
         }
 
+        // TODO 
         public async Task RemoveUserAsync(UserData data)
         {
             await Task.Run(() => _ctx.Remove(_mapper.Map<User>(data)));

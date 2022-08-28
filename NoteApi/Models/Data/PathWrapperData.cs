@@ -1,11 +1,11 @@
-﻿namespace NoteApi.Models.Entities
+﻿namespace NoteApi.Models.Data
 {
-    public class PathWrapper
+    public class PathWrapperData
     {
         public Guid Id { get; set; }
         public float StrokeWidth { get; set; }
         public long StrokeColor { get; set; }
         public long Alpha { get; set; }
-        public ICollection<Point> Points {get; set;}
+        public ICollection<PointData> Points { get; set; }
     }
 }

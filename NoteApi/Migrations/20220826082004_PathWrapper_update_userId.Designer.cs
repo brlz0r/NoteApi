@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NoteApi;
 
@@ -11,9 +12,10 @@ using NoteApi;
 namespace NoteApi.Migrations
 {
     [DbContext(typeof(AppDatabaseContext))]
-    partial class AppDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220826082004_PathWrapper_update_userId")]
+    partial class PathWrapper_update_userId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,31 +23,6 @@ namespace NoteApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("NoteApi.Models.Entities.Note", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Timestamp")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Notes");
-                });
 
             modelBuilder.Entity("NoteApi.Models.Entities.PathWrapper", b =>
                 {
@@ -56,18 +33,16 @@ namespace NoteApi.Migrations
                     b.Property<long>("Alpha")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid?>("NoteId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<long>("StrokeColor")
                         .HasColumnType("bigint");
 
                     b.Property<float>("StrokeWidth")
                         .HasColumnType("real");
 
-                    b.HasKey("Id");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("NoteId");
+                    b.HasKey("Id");
 
                     b.ToTable("PathWrappers");
                 });
@@ -139,13 +114,6 @@ namespace NoteApi.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("NoteApi.Models.Entities.PathWrapper", b =>
-                {
-                    b.HasOne("NoteApi.Models.Entities.Note", null)
-                        .WithMany("PathWrappers")
-                        .HasForeignKey("NoteId");
-                });
-
             modelBuilder.Entity("NoteApi.Models.Entities.Point", b =>
                 {
                     b.HasOne("NoteApi.Models.Entities.PathWrapper", null)
@@ -162,11 +130,6 @@ namespace NoteApi.Migrations
                         .IsRequired();
 
                     b.Navigation("RefreshToken");
-                });
-
-            modelBuilder.Entity("NoteApi.Models.Entities.Note", b =>
-                {
-                    b.Navigation("PathWrappers");
                 });
 
             modelBuilder.Entity("NoteApi.Models.Entities.PathWrapper", b =>

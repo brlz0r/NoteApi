@@ -49,6 +49,11 @@ namespace NoteApi.Services
 
         }
 
+        public async Task<Guid> GetUserIdByTokenAsync(string token)
+        {
+            return await Task.Run(() => _tokens.DecryptToken(token));
+        }
+
         public async Task<AuthTokenData> RefreshTokenAsync(RefreshTokenData data)
         {
             var user = await _userRepository.GetUserByRefreshTokenAsync(data.Token);

@@ -7,5 +7,6 @@ namespace NoteApi.Services.Interfaces
         Task RegistrationAsync(AuthData data);
         Task<AuthTokenData> AuthenticateAsync(AuthData data);
         Task<AuthTokenData> RefreshTokenAsync(RefreshTokenData data);
+        Task<Guid> GetUserIdByTokenAsync(string token);
     }
 }
